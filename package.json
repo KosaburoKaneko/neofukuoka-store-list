@@ -1,0 +1,12 @@
+{
+  "name": "store-list",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/csv2html.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.2.3",
+    "papaparse": "^5.4.1"
+  }
+}

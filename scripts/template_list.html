@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>取扱店舗一覧</title>
+  <style>
+    :root {
+      --bg: #fff;
+      --text: #111;
+      --muted: #9CA3AF;
+      --line: #E5E7EB;
+      --accent: #6b8e23;
+      --maxw: 720px;
+      --radius: 14px;
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 16px 48px;
+    }
+
+    .searchwrap {
+      padding: 12px 16px 12px
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #efefef;
+      border-radius: 20px;
+      padding: 10px 12px
+    }
+
+    .search svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px
+    }
+
+    .search input {
+      border: 0;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 16px
+    }
+
+    .section {
+      padding: 8px 0 4px;
+      margin: 0 16px;
+      font-size: 22px;
+      font-weight: 800
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0
+    }
+
+    .list {
+      margin: 0;
+      padding: 0 0 0 16px;
+      list-style: none
+    }
+
+    .list .item:last-child {
+      border-bottom: 0;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px 14px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .rowlink {
+      display: flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f2f2f2;
+      flex: 0 0 60px
+    }
+
+    .meta {
+      flex: 1;
+      min-width: 0;
+      margin-left: 12px
+    }
+
+    .addr {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px
+    }
+
+    .name {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2
+    }
+
+    .branch {
+      color: #9CA3AF;
+      font-size: 14px;
+      margin-top: 4px
+    }
+
+    .chev {
+      flex: 0 0 18px;
+      display: flex;
+      justify-content: flex-end;
+      color: #9CA3AF
+    }
+
+    .chev svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .hidden {
+      display: none
+    }
+  </style>
+</head>
+
+<body>
+  <div class="searchwrap">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+      <input id="q" type="search" placeholder="検索">
+    </div>
+  </div>
+
+  <div class="wrap" id="root">
+    <!-- LIST_GROUPS_PLACEHOLDER -->
+  </div>
+
+  <!-- JSON-LD -->
+  <!-- JSONLD_PLACEHOLDER -->
+
+  <script>
+    (function () {
+      const q = document.getElementById('q');
+      const norm = s => (s || '').toLowerCase().replace(/\s+/g, '');
+      function filter() {
+        const k = norm(q.value);
+        document.querySelectorAll('.item').forEach(li => {
+          const hay = li.getAttribute('data-hay');
+          const show = !k || hay.includes(k);
+          li.style.display = show ? '' : 'none';
+        });
+        document.querySelectorAll('[data-section]').forEach(sec => {
+          const vis = sec.querySelectorAll('.item:not([style*="display: none"])').length;
+          sec.classList.toggle('hidden', vis === 0);
+        });
+        // ★ 各セクション内の「見えている最後の行」だけ下線を消す
+        document.querySelectorAll('.list').forEach(ul => {
+          const items = Array.from(ul.querySelectorAll('.item'));
+          // いったん全行の下線を有効化
+          items.forEach(li => { li.style.borderBottom = '1px solid var(--line)'; });
+          // 見えている行を抽出して最後の1つの下線だけ消す
+          const visible = items.filter(li => li.style.display !== 'none');
+          if (visible.length) {
+            visible[visible.length - 1].style.borderBottom = '0';
+          }
+        });
+      }
+      q.addEventListener('input', filter); filter();
+    })();
+  </script>
+</body>
+
+</html>
