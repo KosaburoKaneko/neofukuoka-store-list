@@ -13,7 +13,7 @@ GoogleスプレッドシートのCSVを **GitHub Actions** で取得し、**一�
 ## 2) セットアップ
 
 ```bash
-cd store-list-starter
+cd store-list
 npm ci
 ```
 
