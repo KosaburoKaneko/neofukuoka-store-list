@@ -199,4 +199,10 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;
 
   // ---- ここまで：sitemap.xml / robots.txt 自動生成 ----
 
+  try {
+    fs.copyFileSync('google392538f1c5a9088b.html', 'dist/google392538f1c5a9088b.html');
+    console.log('✔ copied: google392538f1c5a9088b.html -> dist/');
+  } catch (e) {
+    console.warn('! google392538f1c5a9088b.html not found, skipped');
+  }
 })();
