@@ -150,14 +150,14 @@ function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 
     tpl = tpl
       .replaceAll('<!-- TITLE -->', title)
-      .replace('<!-- HERO_IMAGE -->', hero)
-      .replace('<!-- SUBTITLE -->', subtitle)
-      .replace('<!-- PREF -->', esc(s.prefecture))
-      .replace('<!-- ADDRESS -->', esc(s.address))
-      .replace('<!-- TEL -->', esc(s.tel))
-      .replace('<!-- PRODUCT -->', esc(s.product))
-      .replace('<!-- MAP_URL -->', gmap(s.address || s.prefecture))
-      .replace('<!-- JSONLD_PLACEHOLDER -->', `<script type="application/ld+json">${JSON.stringify(jd)}</script>`);
+      .replaceAll('<!-- HERO_IMAGE -->', hero)
+      .replaceAll('<!-- SUBTITLE -->', subtitle)
+      .replaceAll('<!-- PREF -->', esc(s.prefecture))
+      .replaceAll('<!-- ADDRESS -->', esc(s.address))
+      .replaceAll('<!-- TEL -->', esc(s.tel))
+      .replaceAll('<!-- PRODUCT -->', esc(s.product))
+      .replaceAll('<!-- MAP_URL -->', gmap(s.address || s.prefecture))
+      .replaceAll('<!-- JSONLD_PLACEHOLDER -->', `<script type="application/ld+json">${JSON.stringify(jd)}</script>`);
 
     fs.writeFileSync(`dist/store-${s.slug}.html`, tpl, 'utf8');
   }
