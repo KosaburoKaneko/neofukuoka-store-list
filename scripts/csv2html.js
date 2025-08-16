@@ -163,4 +163,40 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;
   }
 
   console.log(`✔ ${stores.length} stores -> index.html + detail pages`);
+
+  // ---- ここから：sitemap.xml / robots.txt 自動生成 ----
+
+  // 公開URLのベース（末尾スラッシュ必須）
+  const BASE_URL = 'https://store-list.neo-fukuoka.jp/';
+
+  // すべての公開URLを列挙（トップ + 各店舗詳細）
+  const urls = [
+    `${BASE_URL}`,                // ルート（/）
+    `${BASE_URL}index.html`,     // 明示的に index.html も含めておく
+    ...stores.map(s => `${BASE_URL}store-${s.slug}.html`)
+  ];
+
+  // 変更日（サイト全体のビルド日を使用）
+  const today = new Date().toISOString().slice(0, 10);
+
+  // sitemap.xml を生成
+  const sitemap =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    urls.map(u => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join('\n') +
+    `\n</urlset>`;
+
+  // dist へ書き出し
+  fs.writeFileSync('dist/sitemap.xml', sitemap, 'utf8');
+
+  // robots.txt を生成（検索許可 + サイトマップの場所明示）
+  const robots =
+    `User-agent: *\n` +
+    `Allow: /\n` +
+    `Sitemap: ${BASE_URL}sitemap.xml\n`;
+
+  fs.writeFileSync('dist/robots.txt', robots, 'utf8');
+
+  // ---- ここまで：sitemap.xml / robots.txt 自動生成 ----
+
 })();
