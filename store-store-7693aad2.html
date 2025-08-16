@@ -1,59 +1,187 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>日乃新</title>
-<style>
-:root{--maxw:720px;--line:#E5E7EB;--muted:#9CA3AF;--accent:#6b8e23}
-html,body{margin:0;background:#fff;color:#111;font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
-.wrap{max-width:var(--maxw);margin:0 auto}
-.header{position:sticky;top:0;background:#fff;z-index:5;display:flex;align-items:center;justify-content:center;height:48px;border-bottom:1px solid var(--line)}
-.back{position:absolute;left:12px;top:10px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center}
-.back svg{width:18px;height:18px}
-.hero{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom-left-radius:16px;border-bottom-right-radius:16px}
-.block{padding:16px}
-.title{font-size:24px;font-weight:800}
-.subtitle{color:var(--muted);margin-top:4px}
-.table{margin-top:12px;border-top:1px solid var(--line)}
-.row{display:flex;border-bottom:1px solid var(--line);padding:14px 0}
-.key{width:92px;color:var(--muted)}
-.val{flex:1}
-.cta{position:sticky;bottom:0;padding:16px;background:linear-gradient(180deg, rgba(255,255,255,0), #fff 20%, #fff);}
-.btn{display:block;margin:0 auto;max-width:640px;border-radius:16px;background:var(--accent);color:#fff;text-decoration:none;text-align:center;padding:14px 18px;font-weight:700}
-.btn svg{width:18px;height:18px;vertical-align:-3px;margin-right:6px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>日乃新 | 取扱店舗一覧 | ネオ柚子胡椒の公式オンラインストア「ネオフクオカ」</title>
+  <meta name="description" content="大分県｜大分県由布市湯布院町川北3-3｜ネオ柚子胡椒">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="日乃新 | 取扱店舗一覧 | ネオ柚子胡椒の公式オンラインストア「ネオフクオカ」">
+  <meta property="og:description" content="大分県｜大分県由布市湯布院町川北3-3｜ネオ柚子胡椒">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root {
+      --maxw: 720px;
+      --line: #E5E7EB;
+      --muted: #9CA3AF;
+      --accent: #6b8e23
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: #fff;
+      color: #111;
+      font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .back {
+      position: absolute;
+      left: 12px;
+      top: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .06);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .back svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .hero {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px
+    }
+
+    .block {
+      padding: 16px
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 800
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .table {
+      margin-top: 12px;
+      border-top: 1px solid var(--line)
+    }
+
+    .row {
+      display: flex;
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0
+    }
+
+    .key {
+      width: 92px;
+      color: var(--muted)
+    }
+
+    .val {
+      flex: 1
+    }
+
+    .cta {
+      position: sticky;
+      bottom: 0;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 20%, #fff);
+    }
+
+    .btn {
+      display: block;
+      margin: 0 auto;
+      max-width: 640px;
+      border-radius: 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      padding: 14px 18px;
+      font-weight: 700
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      vertical-align: -3px;
+      margin-right: 6px
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrap">
-  <div class="header">
-    <a class="back" href="./index.html" aria-label="戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
-    <div>日乃新</div>
-  </div>
+  <div class="wrap">
+    <div class="header">
+      <a class="back" href="./index.html" aria-label="戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <path d="M15 18l-6-6 6-6" />
+        </svg></a>
+      <div>日乃新</div>
+    </div>
 
-  <img class="hero" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/30/a3/43/caption.jpg?w=900&amp;h=500&amp;s=1" alt="">
+    <img class="hero" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/30/a3/43/caption.jpg?w=900&amp;h=500&amp;s=1" alt="日乃新">
 
-  <div class="block">
-    <div class="title">日乃新</div>
-    <div class="subtitle"></div>
+    <div class="block">
+      <div class="title">日乃新</div>
+      <div class="subtitle"></div>
 
-    <div class="table">
-      <div class="row"><div class="key">都道府県</div><div class="val">大分県</div></div>
-      <div class="row"><div class="key">住所</div><div class="val">大分県由布市湯布院町川北3-3</div></div>
-      <div class="row"><div class="key">電話番号</div><div class="val">0977-84-5515</div></div>
-      <div class="row"><div class="key">取扱商品</div><div class="val">ネオ柚子胡椒</div></div>
+      <div class="table">
+        <div class="row">
+          <div class="key">都道府県</div>
+          <div class="val">大分県</div>
+        </div>
+        <div class="row">
+          <div class="key">住所</div>
+          <div class="val">大分県由布市湯布院町川北3-3</div>
+        </div>
+        <div class="row">
+          <div class="key">電話番号</div>
+          <div class="val">0977-84-5515</div>
+        </div>
+        <div class="row">
+          <div class="key">取扱商品</div>
+          <div class="val">ネオ柚子胡椒</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E5%88%86%E7%9C%8C%E7%94%B1%E5%B8%83%E5%B8%82%E6%B9%AF%E5%B8%83%E9%99%A2%E7%94%BA%E5%B7%9D%E5%8C%973-3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        Google Mapで見る
+      </a>
     </div>
   </div>
 
-  <div class="cta">
-    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E5%88%86%E7%9C%8C%E7%94%B1%E5%B8%83%E5%B8%82%E6%B9%AF%E5%B8%83%E9%99%A2%E7%94%BA%E5%B7%9D%E5%8C%973-3" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Google Mapで見る
-    </a>
-  </div>
-</div>
-
-<!-- JSON-LD -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"日乃新","address":"大分県由布市湯布院町川北3-3","telephone":"0977-84-5515","image":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/30/a3/43/caption.jpg?w=900&h=500&s=1","url":"store-store-7693aad2.html"}</script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"日乃新","address":"大分県由布市湯布院町川北3-3","telephone":"0977-84-5515","image":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/30/a3/43/caption.jpg?w=900&h=500&s=1","url":"store-store-7693aad2.html"}</script>
 </body>
+
 </html>

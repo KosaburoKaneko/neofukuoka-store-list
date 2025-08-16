@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://store-list.neo-fukuoka.jp/sitemap.xml
