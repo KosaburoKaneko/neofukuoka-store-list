@@ -86,7 +86,7 @@ function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
     .sort((a,b)=>PREFS.indexOf(a[0]) - PREFS.indexOf(b[0]))
     .map(([pref, arr])=>{
       const items = arr.map(s=>{
-        const img = s.image ? `<img class="thumb" src="${esc(s.image)}" alt="">`
+        const img = s.image ? `<img class="thumb" src="${esc(s.image)}" alt="${esc(s.name)}">`
                             : `<div class="thumb" aria-hidden="true"></div>`;
         const branch = s.branch ? `<div class="branch">${esc(s.branch)}</div>` : '';
         return `
@@ -137,7 +137,7 @@ function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
     let tpl = detailTplRaw;
     const title = esc(s.name);
     const subtitle = esc(s.branch || '');
-    const hero = s.image ? `<img class="hero" src="${esc(s.image)}" alt="">` : `<div class="hero" style="background:#f2f2f2"></div>`;
+    const hero = s.image ? `<img class="hero" src="${esc(s.image)}" alt="${esc(s.name)}">` : `<div class="hero" style="background:#f2f2f2"></div>`;
     const jd = {
       "@context":"https://schema.org",
       "@type":"LocalBusiness",
