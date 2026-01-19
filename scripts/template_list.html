@@ -35,7 +35,7 @@
     }
 
     .searchwrap {
-      padding: 12px 16px 12px
+      padding: 12px 16px 0
     }
 
     .search {
@@ -148,6 +148,71 @@
     .hidden {
       display: none
     }
+
+    .filter-wrap {
+      padding: 16px 32px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .filter-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .filter-btn.active[data-product-filter="ごはんにかけるもつ鍋醤油味"] {
+      background: #7a4b2a;
+      border-color: #7a4b2a;
+      color: #fff;
+    }
+
+    .products {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 11px;
+      --chip-color: var(--accent);
+      color: var(--chip-color);
+      border: 1px solid rgba(107, 142, 35, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: rgba(107, 142, 35, 0.08);
+      font-weight: 700;
+    }
+
+    .chip[data-product="ごはんにかけるもつ鍋醤油味"] {
+      --chip-color: #7a4b2a;
+      border-color: rgba(122, 75, 42, 0.35);
+      background: rgba(122, 75, 42, 0.12);
+    }
   </style>
 </head>
 
@@ -162,6 +227,9 @@
     </div>
   </div>
 
+  <!-- PRODUCT FILTER -->
+  <!-- PRODUCT_FILTER_PLACEHOLDER -->
+
   <div class="wrap" id="root">
     <!-- LIST_GROUPS_PLACEHOLDER -->
   </div>
@@ -173,11 +241,27 @@
     (function () {
       const q = document.getElementById('q');
       const norm = s => (s || '').toLowerCase().replace(/\s+/g, '');
+      const filterButtons = document.querySelectorAll('[data-product-filter]');
+      let activeProduct = 'all';
+      function syncButtons() {
+        filterButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.productFilter === activeProduct);
+        });
+      }
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeProduct = btn.dataset.productFilter;
+          syncButtons();
+          filter();
+        });
+      });
       function filter() {
         const k = norm(q.value);
         document.querySelectorAll('.item').forEach(li => {
           const hay = li.getAttribute('data-hay');
-          const show = !k || hay.includes(k);
+          const products = li.getAttribute('data-products') || '';
+          const productOk = activeProduct === 'all' || products.split('|').includes(activeProduct);
+          const show = (!k || hay.includes(k)) && productOk;
           li.style.display = show ? '' : 'none';
         });
         document.querySelectorAll('[data-section]').forEach(sec => {
@@ -196,7 +280,9 @@
           }
         });
       }
-      q.addEventListener('input', filter); filter();
+      q.addEventListener('input', filter);
+      syncButtons();
+      filter();
     })();
   </script>
 </body>

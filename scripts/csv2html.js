@@ -52,6 +52,15 @@ function gmap(addr) {
 }
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m])) }
+function parseProducts(input) {
+  return String(input || '')
+    .split(/[、,]/)
+    .map(s => s.trim())
+    .filter(Boolean);
+}
+function normalizeProduct(input) {
+  return String(input || '').toLowerCase().replace(/\s+/g, '');
+}
 
 (async () => {
   const csv = await fetch(SHEET_CSV).then(r => r.text());
@@ -63,17 +72,31 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;
     const address = pick(row, COLS.address);
     const pref = pick(row, COLS.prefecture) || guessPref(address);
     const branch = pick(row, COLS.branch);
+    const product = pick(row, COLS.product);
+    const products = parseProducts(product);
     return {
       name,
       branch,
       address,
       prefecture: pref || 'その他',
       tel: pick(row, COLS.tel),
-      product: pick(row, COLS.product),
+      product,
+      products,
       image: pick(row, COLS.image),
       slug: makeSlug(name, branch)
     };
   }).filter(Boolean);
+
+  const productLabels = new Map();
+  stores.forEach(store => {
+    store.products.forEach(product => {
+      const key = normalizeProduct(product);
+      if (!productLabels.has(key)) {
+        productLabels.set(key, product);
+      }
+    });
+  });
+  const productFilters = Array.from(productLabels.entries());
 
   const groups = {};
   for (const s of stores) {
@@ -89,14 +112,19 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;
         const img = s.image ? `<img class="thumb" src="${esc(s.image)}" alt="${esc(s.name)}">`
           : `<div class="thumb" aria-hidden="true"></div>`;
         const branch = s.branch ? `<div class="branch">${esc(s.branch)}</div>` : '';
+        const products = s.products.length
+          ? `<div class="products">${s.products.map(p => `<span class="chip" data-product="${esc(normalizeProduct(p))}">${esc(p)}</span>`).join('')}</div>`
+          : '';
+        const productKeys = s.products.map(p => normalizeProduct(p)).join('|');
         return `
-<li class="item" data-hay="${esc((s.name + s.branch + s.address + pref).toLowerCase().replace(/\s+/g, ''))}">
+<li class="item" data-hay="${esc((s.name + s.branch + s.address + pref + s.product).toLowerCase().replace(/\s+/g, ''))}" data-products="${esc(productKeys)}">
   <a href="./store-${s.slug}.html" style="display:contents">
     ${img}
     <div class="meta">
       <div class="addr">${esc(s.address || pref)}</div>
       <div class="name">${esc(s.name)}</div>
       ${branch}
+      ${products}
     </div>
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
   </a>
@@ -126,8 +154,19 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;
   };
 
   const listTpl = fs.readFileSync(path.resolve('scripts/template_list.html'), 'utf8');
+  const productFilterHtml = productFilters.length
+    ? `
+<div class="filter-wrap">
+  <div class="filter-label">商品で絞り込み</div>
+  <div class="filter-row" role="tablist" aria-label="取扱商品">
+    <button class="filter-btn active" type="button" data-product-filter="all">すべて</button>
+    ${productFilters.map(([key, label]) => `<button class="filter-btn" type="button" data-product-filter="${esc(key)}">${esc(label)}</button>`).join('')}
+  </div>
+</div>`
+    : '';
   const listOut = listTpl
     .replace('<!-- LIST_GROUPS_PLACEHOLDER -->', sections)
+    .replace('<!-- PRODUCT_FILTER_PLACEHOLDER -->', productFilterHtml)
     .replace('<!-- JSONLD_PLACEHOLDER -->', `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`);
   fs.mkdirSync('dist', { recursive: true });
   fs.writeFileSync('dist/index.html', listOut, 'utf8');
