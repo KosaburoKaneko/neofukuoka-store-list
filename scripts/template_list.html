@@ -193,12 +193,19 @@
 
     .chip {
       font-size: 11px;
-      color: var(--accent);
+      --chip-color: var(--accent);
+      color: var(--chip-color);
       border: 1px solid rgba(107, 142, 35, 0.35);
       border-radius: 999px;
       padding: 2px 8px;
       background: rgba(107, 142, 35, 0.08);
       font-weight: 700;
+    }
+
+    .chip[data-product="ごはんにかけるもつ鍋醤油味"] {
+      --chip-color: #7a4b2a;
+      border-color: rgba(122, 75, 42, 0.35);
+      background: rgba(122, 75, 42, 0.12);
     }
   </style>
 </head>

@@ -113,7 +113,7 @@ function normalizeProduct(input) {
           : `<div class="thumb" aria-hidden="true"></div>`;
         const branch = s.branch ? `<div class="branch">${esc(s.branch)}</div>` : '';
         const products = s.products.length
-          ? `<div class="products">${s.products.map(p => `<span class="chip">${esc(p)}</span>`).join('')}</div>`
+          ? `<div class="products">${s.products.map(p => `<span class="chip" data-product="${esc(normalizeProduct(p))}">${esc(p)}</span>`).join('')}</div>`
           : '';
         const productKeys = s.products.map(p => normalizeProduct(p)).join('|');
         return `
