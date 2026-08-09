@@ -62,6 +62,21 @@ function normalizeProduct(input) {
   return String(input || '').toLowerCase().replace(/\s+/g, '');
 }
 
+const PRODUCT_DISPLAY_ORDER = [
+  'ネオ柚子胡椒',
+  '激辛ネオ柚子胡椒',
+  'ごはんにかけるもつ鍋醤油味',
+].map(normalizeProduct);
+
+function sortProductFilters(filters) {
+  const priority = new Map(PRODUCT_DISPLAY_ORDER.map((key, index) => [key, index]));
+  return filters.sort(([keyA, labelA], [keyB, labelB]) => {
+    const priorityA = priority.get(keyA) ?? Number.MAX_SAFE_INTEGER;
+    const priorityB = priority.get(keyB) ?? Number.MAX_SAFE_INTEGER;
+    return priorityA - priorityB || labelA.localeCompare(labelB, 'ja');
+  });
+}
+
 (async () => {
   const csv = await fetch(SHEET_CSV).then(r => r.text());
   const { data: raw } = Papa.parse(csv, { header: true, skipEmptyLines: true });
@@ -96,7 +111,8 @@ function normalizeProduct(input) {
       }
     });
   });
-  const productFilters = Array.from(productLabels.entries());
+  // 実際に取扱店舗がある商品だけを、指定の優先順で表示する。
+  const productFilters = sortProductFilters(Array.from(productLabels.entries()));
 
   const groups = {};
   for (const s of stores) {
